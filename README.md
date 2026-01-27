@@ -2,97 +2,176 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Airport Management System
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A comprehensive GraphQL-based airport management system built with NestJS, TypeORM, and PostgreSQL. This application manages flights, passengers, baggage tracking, airport operations, staff, and user authentication.
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The Airport Management System is a full-featured backend API for managing airport operations. It provides GraphQL endpoints for managing:
 
-## Project setup
+- **Airports**: Airport information and management
+- **Flights**: Flight scheduling, routes, and aircraft assignments
+- **Passengers**: Passenger information and flight assignments
+- **Baggage**: Baggage tracking and status management
+- **Staff**: Airport staff management with role-based access
+- **Users**: User authentication and authorization with role-based permissions
 
-```bash
-$ npm install
+Built with [NestJS](https://github.com/nestjs/nest), a progressive Node.js framework for building efficient and scalable server-side applications.
+
+## Tech Stack
+
+- **Framework**: NestJS 11
+- **API Type**: GraphQL
+- **Database**: PostgreSQL with TypeORM
+- **Language**: TypeScript
+- **Testing**: Jest
+- **Validation & Formatting**: ESLint, Prettier
+
+## Project Structure
+
+```
+src/
+├── airport/          # Airport module (entities, services, resolvers)
+├── flights/          # Flights module (scheduling and management)
+├── passengers/       # Passengers module (passenger information)
+├── baggages/         # Baggage tracking module with enums
+├── staff/            # Staff management with role enumeration
+├── users/            # User authentication and authorization
+├── common/           # Shared utilities and services
+├── app.module.ts     # Root application module
+├── app.controller.ts # Application controller
+├── app.service.ts    # Application service
+└── main.ts          # Application entry point
+test/                # E2E test configuration
+docs/                # Database schema diagram
 ```
 
-## Compile and run the project
+## Features
+
+- GraphQL API for all modules
+- Type-safe database operations with TypeORM
+- Environment-based configuration
+- Role-based access control (Users and Staff)
+- Baggage status tracking with enums
+- Unit and E2E test coverage
+- ESLint and Prettier for code quality
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- PostgreSQL database
+
+## Installation
+
+Install dependencies:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+## Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=airport_db
+PORT=3000
+```
+
+## Running the Application
+
+### Development Mode
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Start in development mode with hot-reload
+npm run start:dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Debug Mode
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Start in debug mode with breakpoint support
+npm run start:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Production Mode
 
-## Resources
+```bash
+# Build the application
+npm run build
 
-Check out a few resources that may come in handy when working with NestJS:
+# Start the production build
+npm run start:prod
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+The application will be available at `http://localhost:3000/graphql`
 
-## Support
+## Testing
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Run unit tests
+npm test
 
-## Stay in touch
+# Run tests in watch mode
+npm test:watch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Generate coverage report
+npm test:cov
+
+# Run E2E tests
+npm run test:e2e
+```
+
+## Code Quality
+
+```bash
+# Format code with Prettier
+npm run format
+
+# Run ESLint and fix issues
+npm run lint
+```
+
+## Database Schema
+
+For detailed database schema information, see [db.drawio](docs/db.drawio)
+
+## Project Modules
+
+### Airport Module
+
+Manages airport information and serves as a hub for flights, passengers, and staff.
+
+### Flights Module
+
+Handles flight information, scheduling, passenger assignments, and staff assignments.
+
+### Passengers Module
+
+Manages passenger information and their flight assignments.
+
+### Baggages Module
+
+Tracks baggage information with status enumerations (handling different baggage states throughout the airport).
+
+### Staff Module
+
+Manages airport staff with role-based enumeration for different job positions.
+
+### Users Module
+
+Handles user authentication and authorization with role-based access control.
+
+### Common Module
+
+Provides shared utilities and services used across the application.
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED
