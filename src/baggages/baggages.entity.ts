@@ -8,17 +8,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaggageStatus } from './enums/BaggageStatus-enum';
+import { BaggageStatus } from './BaggageStatus.enum';
 import { Airport } from 'src/airport/airport.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { Passenger } from 'src/passengers/passenger.entity';
 import { BaggageTracking } from './baggagesTracking.entity';
+import { BaseEntity } from 'src/common/base.entity';
 
 @Entity()
-export class Baggage {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Baggage extends BaseEntity {
   @Column()
   tagNumber: string;
 
@@ -58,10 +56,4 @@ export class Baggage {
 
   @OneToMany(() => BaggageTracking, (baggageTracking) => baggageTracking.staff)
   baggageTrackings: BaggageTracking[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

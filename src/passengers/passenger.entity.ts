@@ -1,5 +1,6 @@
 import { Airport } from 'src/airport/airport.entity';
 import { Baggage } from 'src/baggages/baggages.entity';
+import { BaseEntity } from 'src/common/base.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { User } from 'src/users/user.entity';
 import {
@@ -17,10 +18,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Passenger {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Passenger extends BaseEntity {
   @Column()
   passportNumber: string;
 
@@ -42,10 +40,4 @@ export class Passenger {
 
   @OneToMany(() => Baggage, (baggage) => baggage.passenger)
   baggages: Baggage[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

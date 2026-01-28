@@ -9,17 +9,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { StaffRole } from './enums/staff-enum';
+import { StaffRole } from './staff.enum';
 import { User } from 'src/users/user.entity';
 import { Airport } from 'src/airport/airport.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { BaggageTracking } from 'src/baggages/baggagesTracking.entity';
+import { BaseEntity } from 'src/common/base.entity';
 
 @Entity()
-export class Staff {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Staff extends BaseEntity {
   @Column({
     type: 'enum',
     enum: StaffRole,
@@ -48,10 +46,4 @@ export class Staff {
 
   @OneToMany(() => BaggageTracking, (baggageTracking) => baggageTracking.staff)
   baggageTrackings: BaggageTracking[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

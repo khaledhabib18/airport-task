@@ -1,11 +1,13 @@
 import { Airport } from 'src/airport/airport.entity';
 import { Baggage } from 'src/baggages/baggages.entity';
+import { BaseEntity } from 'src/common/base.entity';
 import { Passenger } from 'src/passengers/passenger.entity';
 import { Staff } from 'src/staff/staff.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ForeignKey,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -16,10 +18,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Flight {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Flight extends BaseEntity {
   @Column()
   flightNumber: string;
 
@@ -47,6 +46,9 @@ export class Flight {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
+  // @ForeignKey(() => Airport)
+  // airportId: string;
+
   @OneToMany(() => Staff, (staff) => staff.flight)
   staff: Staff[];
 
@@ -60,10 +62,4 @@ export class Flight {
     inverseJoinColumn: { name: 'passengerId' },
   })
   passengers: Passenger[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

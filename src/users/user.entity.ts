@@ -10,14 +10,12 @@ import {
   JoinColumn,
   OneToOne,
 } from 'typeorm';
-import { UserRole } from './enums/role-enum';
+import { UserRole } from './role.enum';
 import { Staff } from 'src/staff/staff.entity';
+import { BaseEntity } from 'src/common/base.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column()
   email: string;
 
@@ -45,10 +43,4 @@ export class User {
     default: UserRole.Passegner,
   })
   role: UserRole;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

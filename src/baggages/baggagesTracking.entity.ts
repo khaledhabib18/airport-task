@@ -9,14 +9,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Baggage } from './baggages.entity';
-import { BaggageStatus } from './enums/BaggageStatus-enum';
+import { BaggageStatus } from './BaggageStatus.enum';
 import { Airport } from 'src/airport/airport.entity';
+import { BaseEntity } from 'src/common/base.entity';
 
 @Entity()
-export class BaggageTracking {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class BaggageTracking extends BaseEntity {
   @ManyToOne(() => Staff, (staff) => staff.baggageTrackings, {
     onDelete: 'CASCADE',
   })
@@ -50,10 +48,4 @@ export class BaggageTracking {
   })
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }
