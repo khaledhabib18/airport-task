@@ -1,0 +1,74 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Airport {
+  id: String!
+  name: String!
+}
+
+type Flight {
+  id: String!
+  flightNumber: String!
+  departureAirport: String!
+  destinationAirport: String!
+  departureTime: DateTime!
+  arrivalTime: DateTime!
+  airline: String!
+  availableSeats: Float!
+  airportId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type GetFlightsOutput {
+  data: [Flight!]!
+  total: Float!
+  page: Float!
+  limit: Float!
+  totalPages: Float!
+}
+
+type Query {
+  flights(airportId: String!, filter: FlightFilterInput): GetFlightsOutput!
+}
+
+input FlightFilterInput {
+  departureTime: DateTime
+  destinationAirport: String
+  airline: String
+  page: Float
+  limit: Float
+}
+
+type Mutation {
+  createFlight(input: CreateFlightInput!): Flight!
+  updateFlight(id: String!, input: UpdateFlightInput): Flight!
+  deleteFlight(id: String!): Boolean!
+  createAirport(name: String!): Airport!
+}
+
+input CreateFlightInput {
+  flightNumber: String!
+  departureAirport: String!
+  destinationAirport: String!
+  departureTime: DateTime!
+  arrivalTime: DateTime!
+  airline: String!
+  availableSeats: Float!
+  airportId: String!
+}
+
+input UpdateFlightInput {
+  flightNumber: String
+  departureAirport: String
+  destinationAirport: String
+  departureTime: DateTime
+  arrivalTime: DateTime
+  airline: String
+  availableSeats: Float
+  airportId: String
+}

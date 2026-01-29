@@ -1,0 +1,19 @@
+endpoint=http://localhost:3000/graphql
+
+query {
+  flights {
+    id
+    flightNumber
+    departure
+    arrival
+  }
+}
+
+mutation {
+  createFlight(
+    input: { flightNumber: "EG301", departure: "Cairo", arrival: "Rome" }
+  ) {
+    id
+    flightNumber
+  }
+}

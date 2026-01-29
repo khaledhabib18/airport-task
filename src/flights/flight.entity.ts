@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Airport } from 'src/airport/airport.entity';
 import { Baggage } from 'src/baggages/baggages.entity';
 import { BaseEntity } from 'src/common/base.entity';
@@ -5,7 +6,6 @@ import { Passenger } from 'src/passengers/passenger.entity';
 import { Staff } from 'src/staff/staff.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   ForeignKey,
   JoinColumn,
@@ -13,30 +13,36 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
+@ObjectType()
 export class Flight extends BaseEntity {
+  @Field()
   @Column()
   flightNumber: string;
 
+  @Field()
   @Column()
   departureAirport: string;
 
+  @Field()
   @Column()
   destinationAirport: string;
 
+  @Field()
   @Column()
   departureTime: Date;
 
+  @Field()
   @Column()
   arrivalTime: Date;
 
+  @Field()
   @Column()
   airline: string;
 
+  @Field()
   @Column()
   availableSeats: number;
 
@@ -46,8 +52,9 @@ export class Flight extends BaseEntity {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
-  // @ForeignKey(() => Airport)
-  // airportId: string;
+  @Field()
+  @Column({ nullable: true })
+  airportId: string;
 
   @OneToMany(() => Staff, (staff) => staff.flight)
   staff: Staff[];

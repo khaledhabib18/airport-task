@@ -15,9 +15,12 @@ import { Airport } from 'src/airport/airport.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { BaggageTracking } from 'src/baggages/baggagesTracking.entity';
 import { BaseEntity } from 'src/common/base.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class Staff extends BaseEntity {
+  @Field()
   @Column({
     type: 'enum',
     enum: StaffRole,

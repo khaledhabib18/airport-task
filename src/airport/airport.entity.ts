@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Baggage } from 'src/baggages/baggages.entity';
 import { BaggageTracking } from 'src/baggages/baggagesTracking.entity';
 import { BaseEntity } from 'src/common/base.entity';
@@ -14,11 +15,13 @@ import {
 } from 'typeorm';
 
 @Entity()
+@ObjectType()
 export class Airport extends BaseEntity {
-  @Column()
+  @Field()
+  @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => Flight, (flight) => flight.airport)
+  @OneToMany(() => Flight, (flight) => flight.airport, { nullable: true })
   flights: Flight[];
 
   @OneToMany(() => User, (user) => user.airport)
@@ -27,7 +30,7 @@ export class Airport extends BaseEntity {
   @OneToMany(() => Passenger, (passenger) => passenger.airport)
   passengers: Passenger[];
 
-  @OneToMany(() => Baggage, (baggage) => baggage.airport)
+  @OneToMany(() => Baggage, (baggage) => baggage.airport, { nullable: true })
   baggages: Baggage[];
 
   @OneToMany(

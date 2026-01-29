@@ -10,6 +10,11 @@ import { StaffModule } from './staff/staff.module';
 import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ApolloDriver } from '@nestjs/apollo';
+import { GraphqlNotFoundFilter } from './common/graphql-NotFoundException.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -28,6 +33,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: true,
       }),
     }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
+      driver: ApolloDriver,
+    }),
     FlightsModule,
     UsersModule,
     BaggagesModule,
@@ -37,6 +46,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: GraphqlNotFoundFilter,
+    },
+  ],
 })
 export class AppModule {}

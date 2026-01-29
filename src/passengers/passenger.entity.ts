@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Airport } from 'src/airport/airport.entity';
 import { Baggage } from 'src/baggages/baggages.entity';
 import { BaseEntity } from 'src/common/base.entity';
@@ -18,7 +19,9 @@ import {
 } from 'typeorm';
 
 @Entity()
+@ObjectType()
 export class Passenger extends BaseEntity {
+  @Field()
   @Column()
   passportNumber: string;
 

@@ -14,9 +14,12 @@ import { Flight } from 'src/flights/flight.entity';
 import { Passenger } from 'src/passengers/passenger.entity';
 import { BaggageTracking } from './baggagesTracking.entity';
 import { BaseEntity } from 'src/common/base.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class Baggage extends BaseEntity {
+  @Field()
   @Column()
   tagNumber: string;
 

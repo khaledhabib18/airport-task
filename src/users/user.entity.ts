@@ -13,9 +13,12 @@ import {
 import { UserRole } from './role.enum';
 import { Staff } from 'src/staff/staff.entity';
 import { BaseEntity } from 'src/common/base.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class User extends BaseEntity {
+  @Field()
   @Column()
   email: string;
 
