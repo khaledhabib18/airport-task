@@ -83,4 +83,8 @@ export class FlightsService {
   findFlightById(id: string) {
     return this.flightRepository.findOne({ where: { id } });
   }
+
+  getPassegnerFlightInfo(flightId) {
+    return this.flightRepository.findOne({ where: { id: flightId } });
+  }
 }

@@ -9,6 +9,8 @@ import { UseGuards } from '@nestjs/common';
 import { AuthorizationGuard } from 'src/auth/authorization.guard';
 import { hasRole } from 'src/auth/decorators/hasRole.decorator';
 import { UserRole } from 'src/users/role.enum';
+import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
+import { User } from 'src/users/entities/user.entity';
 
 @Resolver(() => Flight)
 export class FlightsResolver {
@@ -40,5 +42,12 @@ export class FlightsResolver {
   @Mutation(() => Boolean)
   async deleteFlight(@Args('id') id: string) {
     return this.flightsService.deleteFlight(id);
+  }
+
+  @Query(() => Flight, { name: 'getFlightInfo' })
+  @UseGuards(AuthorizationGuard)
+  @hasRole(UserRole.PASSENGER)
+  getPassegnerFlightInfo(@Args('flightId') flightId: string) {
+    return this.flightsService.getPassegnerFlightInfo(flightId);
   }
 }

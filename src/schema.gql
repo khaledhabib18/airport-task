@@ -62,6 +62,7 @@ type AuthOutput {
 
 type Query {
   flights(airportId: String!, filter: FlightFilterInput): GetFlightsOutput!
+  getFlightInfo(flightId: String!): Flight!
 }
 
 input FlightFilterInput {
