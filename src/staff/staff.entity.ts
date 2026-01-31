@@ -49,7 +49,10 @@ export class Staff extends BaseEntity {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'flightId' })
-  flight: Flight;
+  flights: Flight[] = [];
+
+  @Column({ nullable: true })
+  flightId: string;
 
   @OneToMany(() => BaggageTracking, (baggageTracking) => baggageTracking.staff)
   baggageTrackings: BaggageTracking[];

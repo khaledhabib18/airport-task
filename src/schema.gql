@@ -86,6 +86,7 @@ type Mutation {
   createAirport(name: String!): Airport!
   bookFlight(input: BookFlightInput!): Passenger!
   registerStaff(input: RegisterStaffInput!): Staff!
+  assigStaffToFlight(input: AssignStaffToFligh!): Staff!
   registerPassenger(input: SignupUserInput!): User!
   verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
@@ -131,6 +132,11 @@ enum StaffRole {
   PILOT
   CREW
   SECURITY
+}
+
+input AssignStaffToFligh {
+  flightId: String!
+  staffId: String!
 }
 
 input SignupUserInput {

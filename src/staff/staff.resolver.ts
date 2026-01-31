@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthorizationGuard } from 'src/auth/authorization.guard';
 import { UserRole } from 'src/users/role.enum';
@@ -8,30 +8,26 @@ import { RegisterStaffInput } from './inputs/registerStaff.input';
 import { UsersService } from 'src/users/services/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Passenger } from 'src/passengers/passenger.entity';
+import { FlightsService } from 'src/flights/flights.service';
+import { AssignStaffToFligh } from './inputs/assignStaffToFlight.input';
+import { StaffService } from './staff.service';
 
 @Resolver()
 export class StaffResolver {
-  constructor(
-    private readonly userService: UsersService,
-    @InjectRepository(Staff)
-    private readonly staffRepository: Repository<Staff>,
-  ) {}
+  constructor(private readonly staffService: StaffService) {}
 
   @UseGuards(AuthorizationGuard)
   @hasRole(UserRole.ADMIN)
   @Mutation(() => Staff)
   async registerStaff(@Args('input') input: RegisterStaffInput) {
-    const { employeeId, role, airportId, ...userData } = input;
-    const user = await this.userService.createUser({
-      ...userData,
-      airportId,
-      role: UserRole.STAFF,
-    });
-    return this.staffRepository.save({
-      employeeId,
-      role,
-      user,
-      airportId,
-    });
+    return this.staffService.registerStaff(input);
+  }
+
+  @UseGuards(AuthorizationGuard)
+  @hasRole(UserRole.ADMIN)
+  @Mutation(() => Staff)
+  async assigStaffToFlight(@Args('input') input: AssignStaffToFligh) {
+    return this.staffService.assigStaffToFlight(input);
   }
 }

@@ -56,7 +56,7 @@ export class Flight extends BaseEntity {
   @Column({ nullable: true })
   airportId: string;
 
-  @OneToMany(() => Staff, (staff) => staff.flight)
+  @OneToMany(() => Staff, (staff) => staff.flights)
   staff: Staff[];
 
   @OneToMany(() => Baggage, (baggage) => baggage.flight)
