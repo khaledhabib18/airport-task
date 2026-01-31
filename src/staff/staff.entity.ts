@@ -28,6 +28,7 @@ export class Staff extends BaseEntity {
   })
   role: StaffRole;
 
+  @Field()
   @Column()
   employeeId: string;
 
@@ -40,6 +41,9 @@ export class Staff extends BaseEntity {
   })
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
+
+  @Column()
+  airportId: string;
 
   @ManyToOne(() => Flight, (flight) => flight.staff, {
     onDelete: 'CASCADE',

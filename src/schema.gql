@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Staff {
+  id: String!
+  role: Float!
+  employeeId: String!
+}
+
 type User {
   id: String!
   name: String!
@@ -79,6 +85,7 @@ type Mutation {
   deleteFlight(id: String!): Boolean!
   createAirport(name: String!): Airport!
   bookFlight(input: BookFlightInput!): Passenger!
+  registerStaff(input: RegisterStaffInput!): Staff!
   registerPassenger(input: SignupUserInput!): User!
   verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
@@ -108,6 +115,22 @@ input UpdateFlightInput {
 
 input BookFlightInput {
   flightId: String!
+}
+
+input RegisterStaffInput {
+  name: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  airportId: String!
+  employeeId: String!
+  role: StaffRole! = CREW
+}
+
+enum StaffRole {
+  PILOT
+  CREW
+  SECURITY
 }
 
 input SignupUserInput {

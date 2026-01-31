@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CommonService } from 'src/common/common.service';
+import { UserRole } from '../role.enum';
 
 @Injectable()
 export class UsersService {
@@ -28,6 +29,7 @@ export class UsersService {
     const user = await this.userRepository.save({
       ...data,
       password: hashedPassword,
+      isVerified: data.role === UserRole.STAFF ? true : false,
     });
     return user;
   }
