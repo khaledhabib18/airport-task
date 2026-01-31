@@ -62,6 +62,28 @@ export class AuthService {
     return this.attachAccessTokenToUser(user);
   }
 
+  async forgetPassword(user: User) {
+    if (!user.isVerified) {
+      throw new BadRequestException('Can not reset password');
+    }
+    const otp = await this.otpService.createOtp(user.id);
+    this.mailService.sendResetPasswordMail(user, otp);
+    return user;
+  }
+
+  async resetPassword(user: User, newPassword: string, otp: string) {
+    const correctOtp = await this.otpService.verifyOtp(user.id, otp);
+    if (!correctOtp) {
+      throw new BadRequestException('wrong otp');
+    }
+    const hashedPassword = await this.commonService.hashPassword(newPassword);
+    user.password = hashedPassword;
+    await this.userService.updateUser(user.id, {
+      password: hashedPassword,
+    });
+    return true;
+  }
+
   private attachAccessTokenToUser(user: User): User & { accessToken: string } {
     const accessToken = this.commonService.generateUserToken(
       user.id,

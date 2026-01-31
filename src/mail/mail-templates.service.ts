@@ -143,4 +143,55 @@ export class MailTemplateService {
 </mjml>
 `;
   }
+  generateResetPasswordMailTemplate(user: User, otp: string) {
+    return `<mjml>
+  <mj-body background-color="#f4f6f8">
+    <mj-section>
+      <mj-column>
+
+        <mj-text font-size="20px" font-weight="bold" align="center">
+          Reset Your Password 🔐
+        </mj-text>
+
+        <mj-text align="center" color="#555">
+          Hello ${user.name},<br/>
+          We received a request to reset your password.
+        </mj-text>
+
+        <mj-divider border-color="#dddddd" />
+
+        <mj-text align="center" font-size="14px" color="#888">
+          Your Password Reset Code
+        </mj-text>
+
+        <mj-text
+          align="center"
+          font-size="36px"
+          font-weight="bold"
+          letter-spacing="6px"
+          color="#2d6cdf"
+        >
+          ${otp}
+        </mj-text>
+
+        <mj-text align="center" color="#777" font-size="13px">
+          This code will expire in 10 minutes.
+        </mj-text>
+
+        <mj-divider border-color="#dddddd" />
+
+        <mj-text align="center" font-size="12px" color="#999">
+          If you didn’t request a password reset, please ignore this email.
+        </mj-text>
+
+        <mj-text align="center" font-size="12px" color="#999">
+          © ${new Date().getFullYear()} Airport Task — All rights reserved
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+`;
+  }
 }

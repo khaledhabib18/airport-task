@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { VerifyUserInput } from './inputs/verify-user.input';
 import { SigninUserInput } from './inputs/signin.input';
+import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
@@ -22,5 +23,19 @@ export class AuthResolver {
   @Mutation(() => AuthOutput)
   signin(@Args('input') input: SigninUserInput) {
     return this.authService.signin(input);
+  }
+
+  @Mutation(() => User)
+  forgetPassword(@CurrentUser() user: User) {
+    return this.authService.forgetPassword(user);
+  }
+
+  @Mutation(() => Boolean)
+  resetPassword(
+    @CurrentUser() user: User,
+    @Args('newPassword') newPassword: string,
+    @Args('otp') otp: string,
+  ) {
+    return this.authService.resetPassword(user, newPassword, otp);
   }
 }

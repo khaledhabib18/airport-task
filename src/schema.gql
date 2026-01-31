@@ -90,6 +90,8 @@ type Mutation {
   registerPassenger(input: SignupUserInput!): User!
   verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
+  forgetPassword: User!
+  resetPassword(newPassword: String!, otp: String!): Boolean!
 }
 
 input CreateFlightInput {

@@ -62,4 +62,29 @@ export class MailService {
       console.error('Error sending email:', error);
     }
   }
+
+  async sendResetPasswordMail(user: User, otp: string) {
+    const mjmlTemplate =
+      this.mailTemplateService.generateResetPasswordMailTemplate(user, otp);
+    const { html } = mjml2html(mjmlTemplate);
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER!,
+        pass: process.env.EMAIL_PASS!,
+      },
+    });
+
+    const mailOptions = {
+      from: '"Khaled Habib" <khaled.habib18@gmail.com>',
+      to: `${user.email}`,
+      subject: 'Airport: Reset Password OTP',
+      html: html,
+    };
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
 }
