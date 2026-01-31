@@ -72,8 +72,8 @@ type Mutation {
   updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
   createAirport(name: String!): Airport!
-  signup(input: SignupUserInput!): User!
-  verifyUser(input: VerifyUserInput!): AuthOutput!
+  registerPassenger(input: SignupUserInput!): User!
+  verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
 }
 

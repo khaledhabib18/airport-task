@@ -10,22 +10,20 @@ import { UseGuards } from '@nestjs/common';
 import { Authorization } from './authorization.guard';
 import { hasRole } from './decorators/hasRole.decorator';
 
-@UseGuards(Authorization)
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => User)
-  signup(@Args('input') input: SignupUserInput) {
+  registerPassenger(@Args('input') input: SignupUserInput) {
     return this.authService.signup(input);
   }
 
   @Mutation(() => AuthOutput)
-  verifyUser(@Args('input') input: VerifyUserInput) {
+  verifyPassenger(@Args('input') input: VerifyUserInput) {
     return this.authService.verifyUser(input);
   }
 
-  @hasRole('PASSENGER')
   @Mutation(() => AuthOutput)
   signin(@Args('input') input: SigninUserInput) {
     return this.authService.signin(input);

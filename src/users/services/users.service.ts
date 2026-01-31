@@ -25,7 +25,6 @@ export class UsersService {
       isVerified: false,
     });
     const hashedPassword = await this.commonService.hashPassword(data.password);
-    console.log(data.airportId);
     return this.userRepository.save({
       ...data,
       password: hashedPassword,
