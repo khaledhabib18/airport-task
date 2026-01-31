@@ -4,6 +4,7 @@ import { SignupUserInput } from './inputs/signup.input';
 import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { VerifyUserInput } from './inputs/verify-user.input';
+import { SigninUserInput } from './inputs/signin.input';
 
 @Resolver()
 export class AuthResolver {
@@ -17,5 +18,10 @@ export class AuthResolver {
   @Mutation(() => AuthOutput)
   verifyUser(@Args('input') input: VerifyUserInput) {
     return this.authService.verifyUser(input);
+  }
+
+  @Mutation(() => AuthOutput)
+  signin(@Args('input') input: SigninUserInput) {
+    return this.authService.signin(input);
   }
 }

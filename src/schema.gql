@@ -74,6 +74,7 @@ type Mutation {
   createAirport(name: String!): Airport!
   signup(input: SignupUserInput!): User!
   verifyUser(input: VerifyUserInput!): AuthOutput!
+  signin(input: SigninUserInput!): AuthOutput!
 }
 
 input CreateFlightInput {
@@ -109,4 +110,9 @@ input SignupUserInput {
 input VerifyUserInput {
   email: String!
   otp: String!
+}
+
+input SigninUserInput {
+  email: String!
+  password: String!
 }
