@@ -3,7 +3,7 @@ import { Airport } from 'src/airport/airport.entity';
 import { Baggage } from 'src/baggages/baggages.entity';
 import { BaseEntity } from 'src/common/base.entity';
 import { Flight } from 'src/flights/flight.entity';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,

@@ -4,7 +4,7 @@ import { BaggageTracking } from 'src/baggages/baggagesTracking.entity';
 import { BaseEntity } from 'src/common/base.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { Passenger } from 'src/passengers/passenger.entity';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,

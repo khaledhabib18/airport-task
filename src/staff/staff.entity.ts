@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { StaffRole } from './staff.enum';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import { Airport } from 'src/airport/airport.entity';
 import { Flight } from 'src/flights/flight.entity';
 import { BaggageTracking } from 'src/baggages/baggagesTracking.entity';

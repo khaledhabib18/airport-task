@@ -15,6 +15,7 @@ import { join } from 'path';
 import { ApolloDriver } from '@nestjs/apollo';
 import { GraphqlNotFoundFilter } from './common/graphql-NotFoundException.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { APP_FILTER } from '@nestjs/core';
     PassengersModule,
     StaffModule,
     CommonModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

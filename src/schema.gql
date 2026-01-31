@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: String!
+  name: String!
+  email: String!
+  phoneNumber: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  PASSENGER
+}
+
 type Airport {
   id: String!
   name: String!
@@ -32,6 +46,15 @@ type GetFlightsOutput {
   totalPages: Float!
 }
 
+type AuthOutput {
+  id: String!
+  name: String!
+  email: String!
+  phoneNumber: String!
+  role: UserRole!
+  accessToken: String!
+}
+
 type Query {
   flights(airportId: String!, filter: FlightFilterInput): GetFlightsOutput!
 }
@@ -49,6 +72,8 @@ type Mutation {
   updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
   createAirport(name: String!): Airport!
+  signup(input: SignupUserInput!): User!
+  verifyUser(input: VerifyUserInput!): AuthOutput!
 }
 
 input CreateFlightInput {
@@ -71,4 +96,17 @@ input UpdateFlightInput {
   airline: String
   availableSeats: Float
   airportId: String
+}
+
+input SignupUserInput {
+  name: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  airportId: String!
+}
+
+input VerifyUserInput {
+  email: String!
+  otp: String!
 }

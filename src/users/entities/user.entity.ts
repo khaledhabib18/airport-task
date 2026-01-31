@@ -9,15 +9,22 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  ForeignKey,
+  OneToMany,
 } from 'typeorm';
-import { UserRole } from './role.enum';
+import { UserRole } from '../role.enum';
 import { Staff } from 'src/staff/staff.entity';
 import { BaseEntity } from 'src/common/base.entity';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { UserOTP } from './user-otp.entity';
 
 @Entity()
 @ObjectType()
 export class User extends BaseEntity {
+  @Field()
+  @Column()
+  name: string;
+
   @Field()
   @Column()
   email: string;
@@ -25,6 +32,7 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Field()
   @Column()
   phoneNumber: string;
 
@@ -34,16 +42,26 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
+  @ForeignKey(() => Airport)
+  airportId: string;
+
   @OneToOne(() => Passenger, (passenger) => passenger.user)
   passenger: Passenger;
 
   @OneToOne(() => Staff, (staff) => staff.user)
   staff: Staff;
 
+  @OneToMany(() => UserOTP, (userOtp) => userOtp.user)
+  otps: UserOTP[];
+
+  @Field(() => UserRole)
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.Passegner,
+    default: UserRole.PASSENGER,
   })
   role: UserRole;
+
+  @Column({ default: false })
+  isVerified: boolean;
 }
