@@ -8,3 +8,9 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
+
+// TODO : authorization
+/*
+  1- admin , staff , passenger 
+  
+*/

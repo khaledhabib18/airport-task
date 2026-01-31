@@ -115,4 +115,5 @@ input VerifyUserInput {
 input SigninUserInput {
   email: String!
   password: String!
+  role: UserRole! = PASSENGER
 }

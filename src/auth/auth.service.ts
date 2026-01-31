@@ -36,6 +36,7 @@ export class AuthService {
     const user = await this.userService.findUserBy({
       email: data.email,
       isVerified: true,
+      role: data.role,
     });
     if (!user) {
       throw new BadRequestException('invalid user or password');

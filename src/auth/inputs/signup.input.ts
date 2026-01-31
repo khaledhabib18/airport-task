@@ -21,7 +21,6 @@ export class SignupUserInput {
   email: string;
 
   @Field()
-  @Min(8)
   @Matches(PASSWORD_REGX)
   password: string;
 

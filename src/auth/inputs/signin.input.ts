@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsString } from 'class-validator';
+import { UserRole } from 'src/users/role.enum';
 
 @InputType()
 export class SigninUserInput {
@@ -10,4 +11,8 @@ export class SigninUserInput {
   @IsString()
   @Field()
   password: string;
+
+  @IsEnum(UserRole)
+  @Field(() => UserRole, { defaultValue: UserRole.PASSENGER })
+  role: UserRole = UserRole.PASSENGER;
 }

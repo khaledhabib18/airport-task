@@ -30,16 +30,12 @@ export class UsersService {
       password: hashedPassword,
     });
   }
-  findUserBy(finder: {
-    email?: string;
-    phoneNumber?: string;
-    isVerified?: boolean;
-  }) {
-    if (Object.keys(finder).length < 1) {
+  findUserBy(where: Partial<User>) {
+    if (Object.keys(where).length < 1) {
       throw new Error('must add email or phone number');
     }
     return this.userRepository.findOne({
-      where: finder,
+      where,
     });
   }
 
