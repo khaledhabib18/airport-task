@@ -15,6 +15,7 @@ import { BookFlightInput } from './inputs/bookFlight.input';
 import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { FlightsService } from 'src/flights/flights.service';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class PassengersService {
@@ -22,6 +23,7 @@ export class PassengersService {
     @InjectRepository(Passenger)
     private readonly passengerRepository: Repository<Passenger>,
     private readonly flighService: FlightsService,
+    private readonly mailService: MailService,
   ) {}
   registerPassenger(data: Partial<Passenger>) {
     return this.passengerRepository.save(data);
@@ -34,6 +36,7 @@ export class PassengersService {
     }
     const passenger = await this.passengerRepository.findOne({
       where: { userId: user.id },
+      relations: ['user'],
     });
     if (!passenger) {
       throw new NotFoundException('Passegner not found');
@@ -41,7 +44,7 @@ export class PassengersService {
     const flight = await this.flighService.bookFlight(passenger, data.flightId);
     passenger.flights = [];
     passenger.flights.push(flight);
-    // TODO send confirmation email
+    this.mailService.sendBookingConfirmationMail(flight, passenger.user);
     return this.passengerRepository.save(passenger);
   }
 }
