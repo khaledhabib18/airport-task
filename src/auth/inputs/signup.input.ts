@@ -31,4 +31,12 @@ export class SignupUserInput {
   @Field()
   @IsUUID()
   airportId: string;
+
+  @Field()
+  @IsString()
+  passportNumber: string;
+
+  @Field()
+  @IsString()
+  nationality: string;
 }

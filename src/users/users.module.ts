@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { OtpService } from './services/otp.service';
 import { UserOTP } from './entities/user-otp.entity';
+import { PassengersModule } from 'src/passengers/passengers.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserOTP])],
+  imports: [TypeOrmModule.forFeature([User, UserOTP]), PassengersModule],
   providers: [UsersService, UsersResolver, OtpService],
   exports: [UsersService, OtpService],
 })

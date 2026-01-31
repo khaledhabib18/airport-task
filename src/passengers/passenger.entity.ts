@@ -34,9 +34,15 @@ export class Passenger extends BaseEntity {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
+  @Column()
+  airportId: string;
+
   @OneToOne(() => User, (user) => user.passenger)
   @JoinColumn()
   user: User;
+
+  @Column()
+  userId: string;
 
   @ManyToMany(() => Flight, (flight) => flight.passengers)
   flights: Flight[];

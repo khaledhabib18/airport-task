@@ -105,6 +105,8 @@ input SignupUserInput {
   password: String!
   phoneNumber: String!
   airportId: String!
+  passportNumber: String!
+  nationality: String!
 }
 
 input VerifyUserInput {
