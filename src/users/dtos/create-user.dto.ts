@@ -13,12 +13,4 @@ export class CreateUserDto extends OmitType(User, [
   'otps',
   'isVerified',
   'role',
-]) {
-  @Field()
-  @IsString()
-  passportNumber: string;
-
-  @Field()
-  @IsString()
-  nationality: string;
-}
+]) {}

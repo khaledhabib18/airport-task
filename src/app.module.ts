@@ -48,7 +48,7 @@ import { CommonService } from './common/common.service';
       ) => ({
         autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
         context: async ({ req }) => {
-          const token = req.headers.authorization.split(' ')[1];
+          const token = req.headers.authorization?.split(' ')[1];
           if (!token) {
             return { user: null };
           }

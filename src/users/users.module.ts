@@ -8,7 +8,7 @@ import { UserOTP } from './entities/user-otp.entity';
 import { PassengersModule } from 'src/passengers/passengers.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserOTP]), PassengersModule],
+  imports: [TypeOrmModule.forFeature([User, UserOTP])],
   providers: [UsersService, UsersResolver, OtpService],
   exports: [UsersService, OtpService],
 })

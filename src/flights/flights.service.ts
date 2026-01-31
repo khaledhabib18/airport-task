@@ -2,8 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Flight } from './flight.entity';
-import { CreateFlightInput } from './dtos/create-flight.input';
-import { FlightFilterInput } from './dtos/filter-flight.input';
+import { CreateFlightInput } from './inputs/create-flight.input';
+import { FlightFilterInput } from './inputs/filter-flight.input';
+import { Passenger } from 'src/passengers/passenger.entity';
 
 @Injectable()
 export class FlightsService {
@@ -66,5 +67,20 @@ export class FlightsService {
     }
     this.flightRepository.remove(flight);
     return true;
+  }
+
+  async bookFlight(passenger: Passenger, flightId: string) {
+    const flight = await this.findFlightById(flightId);
+    if (!flight) {
+      throw new NotFoundException('Flight not found');
+    }
+    flight.passengers = [];
+    flight.passengers.push(passenger);
+    flight.availableSeats = flight.availableSeats - 1;
+    return this.flightRepository.save(flight);
+  }
+
+  findFlightById(id: string) {
+    return this.flightRepository.findOne({ where: { id } });
   }
 }

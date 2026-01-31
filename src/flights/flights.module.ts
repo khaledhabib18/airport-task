@@ -8,5 +8,6 @@ import { AirportModule } from 'src/airport/airport.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Flight])],
   providers: [FlightsService, FlightsResolver],
+  exports: [FlightsService],
 })
 export class FlightsModule {}

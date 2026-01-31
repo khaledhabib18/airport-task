@@ -4,14 +4,12 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CommonService } from 'src/common/common.service';
-import { PassengersService } from 'src/passengers/passengers.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly commonService: CommonService,
-    private readonly passegnerService: PassengersService,
   ) {}
 
   async createUser(data: CreateUserDto) {
@@ -30,14 +28,6 @@ export class UsersService {
     const user = await this.userRepository.save({
       ...data,
       password: hashedPassword,
-    });
-
-    await this.passegnerService.registerPassenger({
-      nationality: data.nationality,
-      passportNumber: data.passportNumber,
-      userId: user.id,
-      airportId: data.airportId,
-      user,
     });
     return user;
   }

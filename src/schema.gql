@@ -16,6 +16,11 @@ enum UserRole {
   PASSENGER
 }
 
+type Passenger {
+  id: String!
+  passportNumber: String!
+}
+
 type Airport {
   id: String!
   name: String!
@@ -72,6 +77,7 @@ type Mutation {
   updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
   createAirport(name: String!): Airport!
+  bookFlight(input: BookFlightInput!): Passenger!
   registerPassenger(input: SignupUserInput!): User!
   verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
@@ -97,6 +103,10 @@ input UpdateFlightInput {
   airline: String
   availableSeats: Float
   airportId: String
+}
+
+input BookFlightInput {
+  flightId: String!
 }
 
 input SignupUserInput {

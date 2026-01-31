@@ -7,6 +7,7 @@ import { User } from 'src/users/entities/user.entity';
 import { CommonService } from 'src/common/common.service';
 import { SigninUserInput } from './inputs/signin.input';
 import { MailService } from 'src/mail/mail.service';
+import { PassengersService } from 'src/passengers/passengers.service';
 
 @Injectable()
 export class AuthService {
@@ -15,11 +16,19 @@ export class AuthService {
     private readonly otpService: OtpService,
     private readonly commonService: CommonService,
     private readonly mailService: MailService,
+    private readonly passegnerService: PassengersService,
   ) {}
 
   async signup(data: SignupUserInput) {
     const user = await this.userService.createUser(data);
     const otp = await this.otpService.createOtp(user.id);
+    const passegner = await this.passegnerService.registerPassenger({
+      nationality: data.nationality,
+      passportNumber: data.passportNumber,
+      airportId: data.airportId,
+      userId: user.id,
+      user: user,
+    });
     this.mailService.sendOtpEmail(user, otp);
     return user;
   }
