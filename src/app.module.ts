@@ -17,6 +17,9 @@ import { GraphqlNotFoundFilter } from './common/graphql-NotFoundException.filter
 import { APP_FILTER } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { UsersService } from './users/services/users.service';
+import { Request } from 'express';
+import { CommonService } from './common/common.service';
 
 @Module({
   imports: [
@@ -35,10 +38,25 @@ import { MailModule } from './mail/mail.module';
         synchronize: true,
       }),
     }),
-    GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
+    GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      context: () => {},
+      imports: [CommonModule, UsersModule],
+      inject: [CommonService, UsersService],
+      useFactory: async (
+        commonService: CommonService,
+        userService: UsersService,
+      ) => ({
+        autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
+        context: async ({ req }) => {
+          const token = req.headers.authorization.split(' ')[1];
+          if (!token) {
+            return { user: null };
+          }
+          const { userId } = commonService.verifyUserToken(token);
+          const user = await userService.findUserBy({ id: userId });
+          return { user };
+        },
+      }),
     }),
     FlightsModule,
     UsersModule,

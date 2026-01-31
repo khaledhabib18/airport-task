@@ -42,7 +42,7 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
-  @ForeignKey(() => Airport)
+  @Column()
   airportId: string;
 
   @OneToOne(() => Passenger, (passenger) => passenger.user)
