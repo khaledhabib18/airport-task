@@ -16,6 +16,7 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { GraphqlNotFoundFilter } from './common/graphql-NotFoundException.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { AuthModule } from './auth/auth.module';
     StaffModule,
     CommonModule,
     AuthModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

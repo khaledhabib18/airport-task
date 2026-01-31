@@ -17,11 +17,12 @@ export class OtpService {
     await this.otpRepository.delete({ userId });
     const otp = this.commonService.generateOtp(6);
     const expirationDate = new Date(Date.now() + 10 * 60 * 1000);
-    return this.otpRepository.save({
+    await this.otpRepository.save({
       userId,
       otp,
       expirationDate,
     });
+    return otp;
   }
 
   async verifyOtp(userId: string, otp: string) {

@@ -6,6 +6,7 @@ import { VerifyUserInput } from './inputs/verify-user.input';
 import { User } from 'src/users/entities/user.entity';
 import { CommonService } from 'src/common/common.service';
 import { SigninUserInput } from './inputs/signin.input';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -13,12 +14,13 @@ export class AuthService {
     private readonly userService: UsersService,
     private readonly otpService: OtpService,
     private readonly commonService: CommonService,
+    private readonly mailService: MailService,
   ) {}
 
   async signup(data: SignupUserInput) {
     const user = await this.userService.createUser(data);
-    await this.otpService.createOtp(user.id);
-    // TODO : send email to the user with the otp
+    const otp = await this.otpService.createOtp(user.id);
+    this.mailService.sendOtpEmail(user, otp);
     return user;
   }
 
