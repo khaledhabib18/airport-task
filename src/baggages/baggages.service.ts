@@ -72,4 +72,19 @@ export class BaggagesService {
 
     return this.baggageRepository.save(baggage);
   }
+
+  async trackBaggage(tagNumber: string, user: User) {
+    const baggage = await this.baggageRepository.findOne({
+      where: {
+        tagNumber,
+        airportId: user.airportId,
+      },
+      relations: ['baggageTrackings'],
+    });
+    console.log(baggage);
+    if (!baggage) {
+      throw new BadRequestException('Baggage not found');
+    }
+    return baggage;
+  }
 }

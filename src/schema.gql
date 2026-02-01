@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type BaggageTracking {
+  id: String!
+  status: String!
+  latitude: Float!
+  longitude: Float!
+  scannedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Staff {
   id: String!
   role: Float!
@@ -30,6 +43,11 @@ type Passenger {
 type Baggage {
   id: String!
   tagNumber: String!
+  weight: Float!
+  currentStatus: String!
+  latitude: Float!
+  longitude: Float!
+  baggageTrackings: [BaggageTracking!]!
 }
 
 type Airport {
@@ -48,11 +66,6 @@ type Flight {
   availableSeats: Float!
   airportId: String!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type GetFlightsOutput {
   data: [Flight!]!
@@ -90,6 +103,7 @@ type Mutation {
   deleteFlight(id: String!): Boolean!
   bookBaggage(input: BookBaggageInput!): Baggage!
   updateBaggageStatus(input: UpdateBaggageStatusInput!): Baggage!
+  trackBaggage(tagNumber: String!): Baggage!
   bookFlight(input: BookFlightInput!): Passenger!
   registerStaff(input: RegisterStaffInput!): Staff!
   assigStaffToFlight(input: AssignStaffToFligh!): Staff!

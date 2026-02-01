@@ -12,8 +12,10 @@ import { Baggage } from './baggages.entity';
 import { BaggageStatus } from './BaggageStatus.enum';
 import { Airport } from 'src/airport/airport.entity';
 import { BaseEntity } from 'src/common/base.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class BaggageTracking extends BaseEntity {
   @ManyToOne(() => Staff, (staff) => staff.baggageTrackings, {
     onDelete: 'CASCADE',
@@ -33,6 +35,7 @@ export class BaggageTracking extends BaseEntity {
   @Column()
   baggageId: string;
 
+  @Field()
   @Column({
     type: 'enum',
     enum: BaggageStatus,
@@ -40,12 +43,15 @@ export class BaggageTracking extends BaseEntity {
   })
   status: BaggageStatus;
 
+  @Field()
   @Column('float')
   latitude: number;
 
+  @Field()
   @Column('float')
   longitude: number;
 
+  @Field()
   @Column()
   scannedAt: Date;
 

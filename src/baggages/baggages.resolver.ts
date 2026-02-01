@@ -9,6 +9,7 @@ import { BaggagesService } from './baggages.service';
 import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { UpdateBaggageStatusInput } from './inputs/updateBaggageStatus.input';
+import { BaggageTracking } from './baggagesTracking.entity';
 
 @Resolver()
 export class BaggagesResolver {
@@ -32,5 +33,15 @@ export class BaggagesResolver {
     @CurrentUser() user: User,
   ) {
     return this.baggageService.updateBaggageStatus(input, user);
+  }
+
+  @UseGuards(AuthorizationGuard)
+  @hasRole(UserRole.PASSENGER)
+  @Mutation(() => Baggage)
+  trackBaggage(
+    @Args('tagNumber') tagNumber: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.baggageService.trackBaggage(tagNumber, user);
   }
 }

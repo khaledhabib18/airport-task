@@ -24,9 +24,11 @@ export class Baggage extends BaseEntity {
   @Column({ unique: true })
   tagNumber: string;
 
+  @Field()
   @Column()
   weight: number;
 
+  @Field()
   @Column({
     type: 'enum',
     enum: BaggageStatus,
@@ -34,9 +36,11 @@ export class Baggage extends BaseEntity {
   })
   currentStatus: BaggageStatus;
 
+  @Field()
   @Column('float', { nullable: true })
   latitude: number;
 
+  @Field()
   @Column('float', { nullable: true })
   longitude: number;
 
@@ -67,7 +71,11 @@ export class Baggage extends BaseEntity {
   @Column()
   passengerId: string;
 
-  @OneToMany(() => BaggageTracking, (baggageTracking) => baggageTracking.staff)
+  @Field(() => [BaggageTracking])
+  @OneToMany(
+    () => BaggageTracking,
+    (baggageTracking) => baggageTracking.baggage,
+  )
   baggageTrackings: BaggageTracking[];
 
   @BeforeInsert()
