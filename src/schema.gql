@@ -65,6 +65,17 @@ type Flight {
   airline: String!
   availableSeats: Float!
   airportId: String!
+  status: FlightStatus!
+  delayMinutes: Float
+}
+
+enum FlightStatus {
+  ON_TIME
+  DELAYED
+  BOARDING
+  DEPARTED
+  LANDED
+  CANCELED
 }
 
 type GetFlightsOutput {
@@ -99,8 +110,8 @@ input FlightFilterInput {
 
 type Mutation {
   createFlight(input: CreateFlightInput!): Flight!
-  updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
+  updateFlight(input: UpdateFlightInput!): Flight!
   bookBaggage(input: BookBaggageInput!): Baggage!
   updateBaggageStatus(input: UpdateBaggageStatusInput!): Baggage!
   trackBaggage(tagNumber: String!): Baggage!
@@ -127,14 +138,9 @@ input CreateFlightInput {
 }
 
 input UpdateFlightInput {
-  flightNumber: String
-  departureAirport: String
-  destinationAirport: String
-  departureTime: DateTime
-  arrivalTime: DateTime
-  airline: String
-  availableSeats: Float
-  airportId: String
+  flightId: String!
+  status: FlightStatus!
+  delayMinutes: Float
 }
 
 input BookBaggageInput {
@@ -204,4 +210,8 @@ input SigninUserInput {
   email: String!
   password: String!
   role: UserRole! = PASSENGER
+}
+
+type Subscription {
+  flightUpdated(flightId: String!): Flight!
 }

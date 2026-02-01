@@ -5,6 +5,7 @@ import { Flight } from './flight.entity';
 import { CreateFlightInput } from './inputs/create-flight.input';
 import { FlightFilterInput } from './inputs/filter-flight.input';
 import { Passenger } from 'src/passengers/passenger.entity';
+import { UpdateFlightInput } from './inputs/update-flight.input';
 
 @Injectable()
 export class FlightsService {
@@ -54,9 +55,15 @@ export class FlightsService {
     return this.flightRepository.save(flight);
   }
 
-  async updateFlight(id: string, input: Partial<CreateFlightInput>) {
-    const flight = await this.flightRepository.findOne({ where: { id } });
-    Object.assign(flight!, input);
+  async updateFlight(data: UpdateFlightInput) {
+    const { flightId, ...updateData } = data;
+    const flight = await this.flightRepository.findOne({
+      where: { id: flightId },
+    });
+    if (!flight) {
+      throw new NotFoundException('Flight not found');
+    }
+    Object.assign(flight!, updateData);
     return this.flightRepository.save(flight!);
   }
 

@@ -14,6 +14,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { FlightStatus } from './flightStatus.enum';
 
 @Entity()
 @ObjectType()
@@ -69,4 +70,16 @@ export class Flight extends BaseEntity {
     inverseJoinColumn: { name: 'passengerId' },
   })
   passengers: Passenger[];
+
+  @Field(() => FlightStatus)
+  @Column({
+    type: 'enum',
+    enum: FlightStatus,
+    default: FlightStatus.ON_TIME,
+  })
+  status: FlightStatus = FlightStatus.ON_TIME;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  delayMinutes?: number;
 }

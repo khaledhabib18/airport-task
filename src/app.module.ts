@@ -46,12 +46,33 @@ import { CommonService } from './common/common.service';
         commonService: CommonService,
         userService: UsersService,
       ) => ({
+        installSubscriptionHandlers: true,
+        subscriptions: {
+          'graphql-ws': true, // Modern protocol
+          'subscriptions-transport-ws': true, // Legacy support
+        },
         autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
-        context: async ({ req }) => {
+        context: async ({ req, extra }) => {
+          // 1. Handle Subscriptions (WebSockets)
+          if (extra) {
+            const connectionParams = extra.connectionParams;
+            // Client sends this as: { connectionParams: { Authorization: 'Bearer ...' } }
+            const authHeader = connectionParams?.Authorization as string;
+            const token = authHeader?.split(' ')[1];
+
+            if (!token) return { user: null };
+
+            const { userId } = commonService.verifyUserToken(token);
+            const user = await userService.findUserBy({ id: userId });
+            return { user };
+          }
+
+          // 2. Handle Queries & Mutations (HTTP)
           const token = req.headers.authorization?.split(' ')[1];
           if (!token) {
             return { user: null };
           }
+
           const { userId } = commonService.verifyUserToken(token);
           const user = await userService.findUserBy({ id: userId });
           return { user };
