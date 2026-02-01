@@ -47,4 +47,11 @@ export class PassengersService {
     this.mailService.sendBookingConfirmationMail(flight, passenger.user);
     return this.passengerRepository.save(passenger);
   }
+
+  findPassegnerByUserId(userId: string) {
+    return this.passengerRepository.findOne({
+      where: { userId },
+      relations: ['flights'],
+    });
+  }
 }

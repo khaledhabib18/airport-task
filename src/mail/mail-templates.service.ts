@@ -1,5 +1,6 @@
+import { Baggage } from 'src/baggages/baggages.entity';
+import { CommonService } from 'src/common/common.service';
 import { Flight } from 'src/flights/flight.entity';
-import { Passenger } from 'src/passengers/passenger.entity';
 import { User } from 'src/users/entities/user.entity';
 
 export class MailTemplateService {
@@ -188,6 +189,106 @@ export class MailTemplateService {
           © ${new Date().getFullYear()} Airport Task — All rights reserved
         </mj-text>
 
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+`;
+  }
+
+  generateBaggageBookingConfirmationMailTemplate(
+    user: User,
+    flight: Flight,
+    baggage: Baggage,
+  ) {
+    return `<mjml>
+  <mj-head>
+    <mj-title>Baggage Booking Confirmation</mj-title>
+    <mj-preview>Your baggage booking has been confirmed</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, Helvetica, sans-serif" />
+      <mj-text font-size="14px" color="#333333" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#f4f6f8">
+    <!-- Header -->
+    <mj-section background-color="#0b5ed7" padding="20px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" font-size="22px" font-weight="bold">
+          Baggage Booking Confirmed
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Main Content -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="16px">
+          Hello <strong>${user.name}</strong>,
+        </mj-text>
+
+        <mj-text>
+          Thank you for booking your baggage with us. Your baggage reservation has been
+          <strong>successfully confirmed</strong>. Below are the details of your booking:
+        </mj-text>
+
+        <!-- Booking Details -->
+        <mj-table cellpadding="8px" cellspacing="0" width="100%">
+          <tr style="background-color:#f4f6f8;">
+            <td><strong>Flight Number</strong></td>
+            <td>${flight.flightNumber}</td>
+          </tr>
+          <tr>
+            <td><strong>Route</strong></td>
+            <td>${flight.departureAirport} → ${flight.destinationAirport}</td>
+          </tr>
+          <tr style="background-color:#f4f6f8;">
+            <td><strong>Departure Date</strong></td>
+            <td>${flight.departureTime}</td>
+          </tr>
+          <tr>
+            <td><strong>Baggage Weight</strong></td>
+            <td>${baggage.weight} kg</td>
+          </tr>
+          <tr>
+            <td><strong>Tag Number</strong></td>
+            <td><strong>${baggage.tagNumber}</strong></td>
+          </tr>
+        </mj-table>
+        <mj-image
+          src="cid:unique@image.cid"
+          alt="Baggage Barcode"
+          width="280px"
+          padding="20px 0"
+        />
+        <mj-text padding-top="15px">
+          Please keep this email for your records and present your booking reference
+          at the airport if required.
+        </mj-text>
+
+        <mj-text>
+          If you need to modify or cancel your baggage booking, please contact our support
+          team before your departure.
+        </mj-text>
+
+        <mj-text>
+          We wish you a pleasant flight! ✈️
+        </mj-text>
+
+        <mj-text>
+          Best regards,<br />
+          <strong>Airport Task</strong>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- Footer -->
+    <mj-section background-color="#f4f6f8" padding="15px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" color="#777777">
+          © ${new Date().getFullYear()} Airport Task. All rights reserved.<br />
+          This is an automated email, please do not reply.
+        </mj-text>
       </mj-column>
     </mj-section>
   </mj-body>

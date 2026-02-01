@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -20,7 +21,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class Baggage extends BaseEntity {
   @Field()
-  @Column()
+  @Column({ unique: true })
   tagNumber: string;
 
   @Column()
@@ -29,14 +30,14 @@ export class Baggage extends BaseEntity {
   @Column({
     type: 'enum',
     enum: BaggageStatus,
-    default: BaggageStatus.CHECKED_IN,
+    default: BaggageStatus.BOOKED,
   })
   currentStatus: BaggageStatus;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   latitude: number;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   longitude: number;
 
   @ManyToOne(() => Airport, (airport) => airport.baggages, {
@@ -45,11 +46,17 @@ export class Baggage extends BaseEntity {
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
 
+  @Column()
+  airportId: string;
+
   @ManyToOne(() => Flight, (flight) => flight.baggages, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'flightId' })
   flight: Flight;
+
+  @Column()
+  flightId: string;
 
   @ManyToOne(() => Passenger, (passenger) => passenger.baggages, {
     onDelete: 'CASCADE',
@@ -57,6 +64,14 @@ export class Baggage extends BaseEntity {
   @JoinColumn({ name: 'passengerId' })
   passenger: Passenger;
 
+  @Column()
+  passengerId: string;
+
   @OneToMany(() => BaggageTracking, (baggageTracking) => baggageTracking.staff)
   baggageTrackings: BaggageTracking[];
+
+  @BeforeInsert()
+  generateTagNumber() {
+    this.tagNumber = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
+  }
 }

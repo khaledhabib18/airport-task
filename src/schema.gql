@@ -27,6 +27,11 @@ type Passenger {
   passportNumber: String!
 }
 
+type Baggage {
+  id: String!
+  tagNumber: String!
+}
+
 type Airport {
   id: String!
   name: String!
@@ -83,8 +88,9 @@ type Mutation {
   createFlight(input: CreateFlightInput!): Flight!
   updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
-  createAirport(name: String!): Airport!
+  bookBaggage(input: BookBaggageInput!): Baggage!
   bookFlight(input: BookFlightInput!): Passenger!
+  createAirport(name: String!): Airport!
   registerStaff(input: RegisterStaffInput!): Staff!
   assigStaffToFlight(input: AssignStaffToFligh!): Staff!
   registerPassenger(input: SignupUserInput!): User!
@@ -114,6 +120,12 @@ input UpdateFlightInput {
   airline: String
   availableSeats: Float
   airportId: String
+}
+
+input BookBaggageInput {
+  weight: Float!
+  airportId: String!
+  flightId: String!
 }
 
 input BookFlightInput {

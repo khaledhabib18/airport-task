@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import bwipjs from 'bwip-js';
+import sharp from 'sharp';
 @Injectable()
 export class CommonService {
   hashPassword(password: string): Promise<string> {
@@ -32,5 +34,21 @@ export class CommonService {
       userId: string;
       airportId: string;
     };
+  }
+
+  async generateBarCode(text: string): Promise<string> {
+    const png = await bwipjs.toBuffer({
+      bcid: 'code128',
+      text: text,
+      scale: 3,
+      height: 10,
+      includetext: true,
+      textxalign: 'center',
+      backgroundcolor: 'FFFFFF',
+      paddingwidth: 10,
+      paddingheight: 10,
+    });
+    const jpeg = await sharp(png).jpeg().toBuffer();
+    return `${jpeg.toString('base64')}`;
   }
 }
