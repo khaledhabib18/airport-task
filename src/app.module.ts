@@ -18,8 +18,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { UsersService } from './users/services/users.service';
-import { Request } from 'express';
 import { CommonService } from './common/common.service';
+import { WhatsappModule } from './whatsapp/whatsapp.module';
 
 @Module({
   imports: [
@@ -88,6 +88,7 @@ import { CommonService } from './common/common.service';
     CommonModule,
     AuthModule,
     MailModule,
+    WhatsappModule,
   ],
   controllers: [AppController],
   providers: [

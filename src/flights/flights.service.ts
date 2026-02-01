@@ -6,12 +6,14 @@ import { CreateFlightInput } from './inputs/create-flight.input';
 import { FlightFilterInput } from './inputs/filter-flight.input';
 import { Passenger } from 'src/passengers/passenger.entity';
 import { UpdateFlightInput } from './inputs/update-flight.input';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 @Injectable()
 export class FlightsService {
   constructor(
     @InjectRepository(Flight)
     private readonly flightRepository: Repository<Flight>,
+    private readonly whatsappService: WhatsappService,
   ) {}
 
   async getAllFlights(airportId: string, filter: FlightFilterInput) {
@@ -59,11 +61,24 @@ export class FlightsService {
     const { flightId, ...updateData } = data;
     const flight = await this.flightRepository.findOne({
       where: { id: flightId },
+      relations: { passengers: { user: true } },
     });
     if (!flight) {
       throw new NotFoundException('Flight not found');
     }
+    const phoneNumbers = flight?.passengers.map((p) => p.user.phoneNumber);
     Object.assign(flight!, updateData);
+    const message = `✈️ Flight Status Update
+
+Your flight ${flight.flightNumber} is *${flight.status}*.
+
+From: ${flight.departureAirport}
+
+To: ${flight.destinationAirport}
+
+*Please check it on your app!*
+Thank you for flying with Airport Task.`;
+    this.whatsappService.sendMessages(phoneNumbers, message);
     return this.flightRepository.save(flight!);
   }
 
