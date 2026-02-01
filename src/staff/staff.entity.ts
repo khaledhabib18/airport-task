@@ -36,6 +36,9 @@ export class Staff extends BaseEntity {
   @JoinColumn()
   user: User;
 
+  @Column()
+  userId: string;
+
   @ManyToOne(() => Airport, (airport) => airport.passengers, {
     onDelete: 'CASCADE',
   })

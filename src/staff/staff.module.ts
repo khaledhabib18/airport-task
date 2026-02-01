@@ -9,5 +9,6 @@ import { FlightsModule } from 'src/flights/flights.module';
 @Module({
   providers: [StaffService, StaffResolver],
   imports: [UsersModule, TypeOrmModule.forFeature([Staff]), FlightsModule],
+  exports: [StaffService],
 })
 export class StaffModule {}

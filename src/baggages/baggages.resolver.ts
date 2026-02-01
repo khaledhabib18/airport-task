@@ -8,6 +8,7 @@ import { BookBaggageInput } from './inputs/bookBaggage.input';
 import { BaggagesService } from './baggages.service';
 import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
 import { User } from 'src/users/entities/user.entity';
+import { UpdateBaggageStatusInput } from './inputs/updateBaggageStatus.input';
 
 @Resolver()
 export class BaggagesResolver {
@@ -21,5 +22,15 @@ export class BaggagesResolver {
     @CurrentUser() user: User,
   ) {
     return this.baggageService.bookBaggage(input, user);
+  }
+
+  @UseGuards(AuthorizationGuard)
+  @hasRole(UserRole.STAFF)
+  @Mutation(() => Baggage)
+  updateBaggageStatus(
+    @Args('input') input: UpdateBaggageStatusInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.baggageService.updateBaggageStatus(input, user);
   }
 }

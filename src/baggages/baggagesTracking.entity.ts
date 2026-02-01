@@ -21,11 +21,17 @@ export class BaggageTracking extends BaseEntity {
   @JoinColumn({ name: 'staffId' })
   staff: Staff;
 
+  @Column()
+  staffId: string;
+
   @ManyToOne(() => Baggage, (baggage) => baggage.baggageTrackings, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'baggageId' })
   baggage: Baggage;
+
+  @Column()
+  baggageId: string;
 
   @Column({
     type: 'enum',
@@ -48,4 +54,7 @@ export class BaggageTracking extends BaseEntity {
   })
   @JoinColumn({ name: 'airportId' })
   airport: Airport;
+
+  @Column()
+  airportId: string;
 }

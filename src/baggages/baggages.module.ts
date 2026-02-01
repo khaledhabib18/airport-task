@@ -6,6 +6,7 @@ import { Baggage } from './baggages.entity';
 import { BaggageTracking } from './baggagesTracking.entity';
 import { PassengersModule } from 'src/passengers/passengers.module';
 import { MailModule } from 'src/mail/mail.module';
+import { StaffModule } from 'src/staff/staff.module';
 
 @Module({
   providers: [BaggagesService, BaggagesResolver],
@@ -13,6 +14,7 @@ import { MailModule } from 'src/mail/mail.module';
     TypeOrmModule.forFeature([Baggage, BaggageTracking]),
     PassengersModule,
     MailModule,
+    StaffModule,
   ],
 })
 export class BaggagesModule {}

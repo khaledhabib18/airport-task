@@ -49,4 +49,8 @@ export class StaffService {
       { flightId: flight.id },
     );
   }
+
+  findStaffBy(userId: string) {
+    return this.staffRepository.findOne({ where: { userId } });
+  }
 }

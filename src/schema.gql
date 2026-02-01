@@ -89,10 +89,11 @@ type Mutation {
   updateFlight(id: String!, input: UpdateFlightInput): Flight!
   deleteFlight(id: String!): Boolean!
   bookBaggage(input: BookBaggageInput!): Baggage!
+  updateBaggageStatus(input: UpdateBaggageStatusInput!): Baggage!
   bookFlight(input: BookFlightInput!): Passenger!
-  createAirport(name: String!): Airport!
   registerStaff(input: RegisterStaffInput!): Staff!
   assigStaffToFlight(input: AssignStaffToFligh!): Staff!
+  createAirport(name: String!): Airport!
   registerPassenger(input: SignupUserInput!): User!
   verifyPassenger(input: VerifyUserInput!): AuthOutput!
   signin(input: SigninUserInput!): AuthOutput!
@@ -126,6 +127,23 @@ input BookBaggageInput {
   weight: Float!
   airportId: String!
   flightId: String!
+}
+
+input UpdateBaggageStatusInput {
+  tagNumber: String!
+  status: BaggageStatus!
+  latitude: Float!
+  lognitude: Float!
+  airportId: String!
+}
+
+enum BaggageStatus {
+  BOOKED
+  CHECKED_IN
+  LOADED
+  IN_TRANSIT
+  DELIVERED
+  LOST
 }
 
 input BookFlightInput {
