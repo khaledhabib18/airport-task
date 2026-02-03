@@ -7,7 +7,7 @@ import { AirportModule } from 'src/airport/airport.module';
 import { WhatsappModule } from 'src/whatsapp/whatsapp.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Flight]), WhatsappModule],
+  imports: [TypeOrmModule.forFeature([Flight])],
   providers: [FlightsService, FlightsResolver],
   exports: [FlightsService],
 })

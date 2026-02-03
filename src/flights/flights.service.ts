@@ -13,7 +13,7 @@ export class FlightsService {
   constructor(
     @InjectRepository(Flight)
     private readonly flightRepository: Repository<Flight>,
-    private readonly whatsappService: WhatsappService,
+    // private readonly whatsappService: WhatsappService,
   ) {}
 
   async getAllFlights(airportId: string, filter: FlightFilterInput) {
@@ -78,7 +78,7 @@ To: ${flight.destinationAirport}
 
 *Please check it on your app!*
 Thank you for flying with Airport Task.`;
-    this.whatsappService.sendMessages(phoneNumbers, message);
+    // this.whatsappService.sendMessages(phoneNumbers, message);
     return this.flightRepository.save(flight!);
   }
 
