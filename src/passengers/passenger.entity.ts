@@ -37,7 +37,7 @@ export class Passenger extends BaseEntity {
   @Column()
   airportId: string;
 
-  @OneToOne(() => User, (user) => user.passenger)
+  @OneToOne(() => User, (user) => user.passenger, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 
