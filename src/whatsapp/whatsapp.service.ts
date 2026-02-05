@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { Client, LocalAuth } from 'whatsapp-web.js';
 import * as qrcode from 'qrcode-terminal';
+import puppeteer from 'puppeteer';
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
@@ -13,6 +14,7 @@ export class WhatsappService implements OnModuleInit {
       puppeteer: {
         headless: true,
         handleSIGINT: false,
+        executablePath: puppeteer.executablePath(),
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
