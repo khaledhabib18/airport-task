@@ -14,11 +14,16 @@ export class WhatsappService implements OnModuleInit {
       puppeteer: {
         headless: true,
         handleSIGINT: false,
-        executablePath: puppeteer.executablePath(),
+        executablePath: false,
+        protocolTimeout: 120000,
+        timeout: 60000,
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
+          '--disable-gpu',
+          '--no-zygote',
+          '--single-process',
         ],
       },
     });
