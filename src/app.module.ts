@@ -52,6 +52,9 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
           'subscriptions-transport-ws': true, // Legacy support
         },
         autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
+        playground: true,
+        introspection: true,
+        csrfPrevention: true,
         context: async ({ req, extra }) => {
           // 1. Handle Subscriptions (WebSockets)
           if (extra) {
