@@ -20,6 +20,7 @@ import { MailModule } from './mail/mail.module';
 import { UsersService } from './users/services/users.service';
 import { CommonService } from './common/common.service';
 import { WhatsappModule } from './whatsapp/whatsapp.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -91,6 +92,9 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
     CommonModule,
     AuthModule,
     MailModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
   ],
   controllers: [AppController],
   providers: [

@@ -1,0 +1,159 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Full-screen background */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #1f2937;
+}
+
+/* Center content */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Glass card */
+.glass-card {
+  width: 100%;
+  max-width: 640px;
+  padding: 48px 40px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Headings */
+h1 {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+h1 span {
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Text */
+.tagline {
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  line-height: 1.7;
+  color: #4b5563;
+  margin-bottom: 36px;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 26px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #020617;
+}
+
+.btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.45);
+}
+
+.btn.secondary {
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+}
+
+.btn.secondary:hover {
+  background: #38bdf8;
+  color: #020617;
+}
+
+/* Footer */
+.footer-text {
+  margin-top: 36px;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* 📱 Mobile tweaks */
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 36px 24px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Tech stack section */
+.stack {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.stack-title {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.stack-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 72px;
+}
+
+.stack-item img {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.25s ease;
+}
+
+.stack-item span {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.stack-item:hover img {
+  transform: scale(1.15);
+}
