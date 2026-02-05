@@ -11,8 +11,13 @@ export class WhatsappService implements OnModuleInit {
     this.client = new Client({
       authStrategy: new LocalAuth(),
       puppeteer: {
+        headless: true,
         handleSIGINT: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+        ],
       },
     });
   }

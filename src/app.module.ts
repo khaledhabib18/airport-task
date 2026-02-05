@@ -92,6 +92,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     CommonModule,
     AuthModule,
     MailModule,
+    WhatsappModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
