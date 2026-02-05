@@ -14,7 +14,7 @@ export class WhatsappService implements OnModuleInit {
       puppeteer: {
         headless: true,
         handleSIGINT: false,
-        executablePath: false,
+        executablePath: puppeteer.executablePath(),
         protocolTimeout: 120000,
         timeout: 60000,
         args: [

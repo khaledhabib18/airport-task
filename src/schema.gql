@@ -1,0 +1,217 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BaggageTracking {
+  id: String!
+  status: String!
+  latitude: Float!
+  longitude: Float!
+  scannedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Staff {
+  id: String!
+  role: Float!
+  employeeId: String!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  phoneNumber: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  PASSENGER
+}
+
+type Passenger {
+  id: String!
+  passportNumber: String!
+}
+
+type Baggage {
+  id: String!
+  tagNumber: String!
+  weight: Float!
+  currentStatus: String!
+  latitude: Float!
+  longitude: Float!
+  baggageTrackings: [BaggageTracking!]!
+}
+
+type Airport {
+  id: String!
+  name: String!
+}
+
+type Flight {
+  id: String!
+  flightNumber: String!
+  departureAirport: String!
+  destinationAirport: String!
+  departureTime: DateTime!
+  arrivalTime: DateTime!
+  airline: String!
+  availableSeats: Float!
+  airportId: String!
+  status: FlightStatus!
+  delayMinutes: Float
+}
+
+enum FlightStatus {
+  ON_TIME
+  DELAYED
+  BOARDING
+  DEPARTED
+  LANDED
+  CANCELED
+}
+
+type GetFlightsOutput {
+  data: [Flight!]!
+  total: Float!
+  page: Float!
+  limit: Float!
+  totalPages: Float!
+}
+
+type AuthOutput {
+  id: String!
+  name: String!
+  email: String!
+  phoneNumber: String!
+  role: UserRole!
+  accessToken: String!
+}
+
+type Query {
+  flights(airportId: String!, filter: FlightFilterInput): GetFlightsOutput!
+  getFlightInfo(flightId: String!): Flight!
+}
+
+input FlightFilterInput {
+  departureTime: DateTime
+  destinationAirport: String
+  airline: String
+  page: Float
+  limit: Float
+}
+
+type Mutation {
+  createFlight(input: CreateFlightInput!): Flight!
+  deleteFlight(id: String!): Boolean!
+  updateFlight(input: UpdateFlightInput!): Flight!
+  bookBaggage(input: BookBaggageInput!): Baggage!
+  updateBaggageStatus(input: UpdateBaggageStatusInput!): Baggage!
+  trackBaggage(tagNumber: String!): Baggage!
+  bookFlight(input: BookFlightInput!): Passenger!
+  registerStaff(input: RegisterStaffInput!): Staff!
+  assigStaffToFlight(input: AssignStaffToFligh!): Staff!
+  createAirport(name: String!): Airport!
+  registerPassenger(input: SignupUserInput!): User!
+  verifyPassenger(input: VerifyUserInput!): AuthOutput!
+  signin(input: SigninUserInput!): AuthOutput!
+  forgetPassword: User!
+  resetPassword(newPassword: String!, otp: String!): Boolean!
+}
+
+input CreateFlightInput {
+  flightNumber: String!
+  departureAirport: String!
+  destinationAirport: String!
+  departureTime: DateTime!
+  arrivalTime: DateTime!
+  airline: String!
+  availableSeats: Float!
+  airportId: String!
+}
+
+input UpdateFlightInput {
+  flightId: String!
+  status: FlightStatus!
+  delayMinutes: Float
+}
+
+input BookBaggageInput {
+  weight: Float!
+  airportId: String!
+  flightId: String!
+}
+
+input UpdateBaggageStatusInput {
+  tagNumber: String!
+  status: BaggageStatus!
+  latitude: Float!
+  lognitude: Float!
+  airportId: String!
+}
+
+enum BaggageStatus {
+  BOOKED
+  CHECKED_IN
+  LOADED
+  IN_TRANSIT
+  DELIVERED
+  LOST
+}
+
+input BookFlightInput {
+  flightId: String!
+}
+
+input RegisterStaffInput {
+  name: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  airportId: String!
+  employeeId: String!
+  role: StaffRole! = CREW
+}
+
+enum StaffRole {
+  PILOT
+  CREW
+  SECURITY
+}
+
+input AssignStaffToFligh {
+  flightId: String!
+  staffId: String!
+}
+
+input SignupUserInput {
+  name: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  airportId: String!
+  passportNumber: String!
+  nationality: String!
+}
+
+input VerifyUserInput {
+  email: String!
+  otp: String!
+}
+
+input SigninUserInput {
+  email: String!
+  password: String!
+  role: UserRole! = PASSENGER
+}
+
+type Subscription {
+  flightUpdated(flightId: String!): Flight!
+}
