@@ -1,5 +1,12 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { AuthorizationGuard } from 'src/auth/authorization.guard';
 import { hasRole } from 'src/auth/decorators/hasRole.decorator';
 import { UserRole } from 'src/users/role.enum';
@@ -10,8 +17,9 @@ import { CurrentUser } from 'src/users/decorators/CurrentUser.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { UpdateBaggageStatusInput } from './inputs/updateBaggageStatus.input';
 import { BaggageTracking } from './baggagesTracking.entity';
+import { IDataloaders } from 'src/dataloader/dataloader.interface';
 
-@Resolver()
+@Resolver(() => Baggage)
 export class BaggagesResolver {
   constructor(private readonly baggageService: BaggagesService) {}
 
@@ -43,5 +51,14 @@ export class BaggagesResolver {
     @CurrentUser() user: User,
   ) {
     return this.baggageService.trackBaggage(tagNumber, user);
+  }
+
+  @ResolveField('baggageTrackings', () => [BaggageTracking])
+  getBaggageTracking(
+    @Parent() baggage: Baggage,
+    @Context() { loaders }: { loaders: IDataloaders },
+  ) {
+    const { id: baggageId } = baggage;
+    return loaders.baggageTrackingsLoader.load(baggageId);
   }
 }

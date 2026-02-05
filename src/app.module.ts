@@ -21,6 +21,8 @@ import { UsersService } from './users/services/users.service';
 import { CommonService } from './common/common.service';
 import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { DataloaderModule } from './dataloader/dataloader.module';
+import { DataloaderService } from './dataloader/dataloader.service';
 
 @Module({
   imports: [
@@ -41,11 +43,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      imports: [CommonModule, UsersModule],
-      inject: [CommonService, UsersService],
+      imports: [CommonModule, UsersModule, DataloaderModule],
+      inject: [CommonService, UsersService, DataloaderService],
       useFactory: async (
         commonService: CommonService,
         userService: UsersService,
+        dataloaderService: DataloaderService,
       ) => ({
         installSubscriptionHandlers: true,
         subscriptions: {
@@ -57,6 +60,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         introspection: true,
         csrfPrevention: true,
         context: async ({ req, extra }) => {
+          const loaders = dataloaderService.getLoaders();
           // 1. Handle Subscriptions (WebSockets)
           if (extra) {
             const connectionParams = extra.connectionParams;
@@ -68,7 +72,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
             const { userId } = commonService.verifyUserToken(token);
             const user = await userService.findUserBy({ id: userId });
-            return { user };
+            return { user, loaders };
           }
 
           // 2. Handle Queries & Mutations (HTTP)
@@ -79,7 +83,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
           const { userId } = commonService.verifyUserToken(token);
           const user = await userService.findUserBy({ id: userId });
-          return { user };
+          return { user, loaders };
         },
       }),
     }),
@@ -96,6 +100,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    DataloaderModule,
   ],
   controllers: [AppController],
   providers: [

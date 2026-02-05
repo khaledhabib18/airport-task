@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Baggage } from './baggages.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { BaggageTracking } from './baggagesTracking.entity';
 import { BookBaggageInput } from './inputs/bookBaggage.input';
 import { User } from 'src/users/entities/user.entity';
@@ -79,9 +79,7 @@ export class BaggagesService {
         tagNumber,
         airportId: user.airportId,
       },
-      relations: ['baggageTrackings'],
     });
-    console.log(baggage);
     if (!baggage) {
       throw new BadRequestException('Baggage not found');
     }
